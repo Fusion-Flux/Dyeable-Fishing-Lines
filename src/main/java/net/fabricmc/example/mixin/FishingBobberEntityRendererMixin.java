@@ -42,10 +42,10 @@ public abstract class FishingBobberEntityRendererMixin implements ColorAccessor 
 
     private static void customRenderFishingLine(FishingBobberEntity fishingBobberEntity,float x, float y, float z, VertexConsumer buffer, MatrixStack.Entry matrices, float segmentStart, float segmentEnd) {
         float f = x * segmentStart;
-        float g = y * (segmentStart * segmentStart + segmentStart) * 0.5F + 0.25F;
+        float gg = y * (segmentStart * segmentStart + segmentStart) * 0.5F + 0.25F;
         float h = z * segmentStart;
         float i = x * segmentEnd - f;
-        float j = y * (segmentEnd * segmentEnd + segmentEnd) * 0.5F + 0.25F - g;
+        float j = y * (segmentEnd * segmentEnd + segmentEnd) * 0.5F + 0.25F - gg;
         float k = z * segmentEnd - h;
         float l = MathHelper.sqrt(i * i + j * j + k * k);
         i /= l;
@@ -59,27 +59,26 @@ public abstract class FishingBobberEntityRendererMixin implements ColorAccessor 
             color = -1908001;
         }
         int r = (color & 0xFF0000) >> 16;
-        int gg = (color & 0xFF00) >> 8;
+        int g = (color & 0xFF00) >> 8;
         int b = color & 0xFF;
-        float s;
-        float tt;
-        float u;
+        float r2;
+        float g2;
+        float b2;
         if (((ColorAccessor)fishingBobberEntity).getRGB()) {
-            //int m = true;
-            int n = fishingBobberEntity.age / 25 + fishingBobberEntity.getId();
-            int o = DyeColor.values().length;
-            int p = n % o;
-            int q = (n + 1) % o;
-            float t = ((float)(fishingBobberEntity.age % 25) + h) / 25.0F;
-            float[] fs = SheepEntity.getRgbColor(DyeColor.byId(p));
-            float[] gs = SheepEntity.getRgbColor(DyeColor.byId(q));
-            s = (fs[0] * (1.0F - t) + gs[0] * t);
-            tt = (fs[1] * (1.0F - t) + gs[1] * t);
-            u = (fs[2] * (1.0F - t) + gs[2] * t);
-            buffer.vertex(matrices.getPositionMatrix(), f, g, h).color(s, tt ,u, 1.0f).normal(matrices.getNormalMatrix(), i, j, k).next();
+
+            float t = ((float)(fishingBobberEntity.age % 30f))/30f;
+
+           /* r2 =  ((fishingBobberEntity.age) % 120f) /120f;;
+            g2 =  ((fishingBobberEntity.age+40) % 120f) /120f;;
+            b2 =  ((fishingBobberEntity.age+80) % 120f) /120f;;*/
+            r2 = (float)(Math.sin( ((fishingBobberEntity.age +  0) % 240f) * Math.PI / 60f ) + 1 ) / 2;
+            g2 = (float)(Math.sin( ((fishingBobberEntity.age + 80) % 240f) * Math.PI / 60f ) + 1 ) / 2;
+            b2 = (float)(Math.sin( ((fishingBobberEntity.age + 160) % 240f) * Math.PI / 60f ) + 1 ) / 2;
+
+            buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(r2, g2 ,b2, 1.0f).normal(matrices.getNormalMatrix(), i, j, k).next();
 
         }else{
-            buffer.vertex(matrices.getPositionMatrix(), f, g, h).color(r, gg, b, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(r, g, b, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
 
         }
     }
