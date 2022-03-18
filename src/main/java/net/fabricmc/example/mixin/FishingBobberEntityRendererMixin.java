@@ -33,9 +33,41 @@ public abstract class FishingBobberEntityRendererMixin implements ColorAccessor 
 
 
    @Inject(method = "render(Lnet/minecraft/entity/projectile/FishingBobberEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/FishingBobberEntityRenderer;renderFishingLine(FFFLnet/minecraft/client/render/VertexConsumer;Lnet/minecraft/client/util/math/MatrixStack$Entry;FF)V"),locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void mixin(FishingBobberEntity fishingBobberEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci, PlayerEntity playerEntity, MatrixStack.Entry entry, Matrix4f matrix4f, Matrix3f matrix3f, VertexConsumer vertexConsumer, int j, ItemStack itemStack, float h, float k, float l, double d, double e, double m, double n, double o, double p, double q, float r, double s, double t, double u, float v, float w, float x, VertexConsumer vertexConsumer2, MatrixStack.Entry entry2, int y, int z){
-        customRenderFishingLine(fishingBobberEntity,v, w, x, vertexConsumer2, entry2, percentage(z, 16), percentage(z + 1, 16));
-    }
+    private void mixin(FishingBobberEntity fishingBobberEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci, PlayerEntity playerEntity, MatrixStack.Entry entry, Matrix4f matrix4f, Matrix3f matrix3f, VertexConsumer vertexConsumer, int j, ItemStack itemStack, float h, float k, float l, double d, double e, double m, double n, double o, double p, double q, float r, double s, double t, double u, float v, float w, float x, VertexConsumer vertexConsumer2, MatrixStack.Entry entry2, int y, int z) {
+       String name = ((ColorAccessor) fishingBobberEntity).getRGB().toLowerCase(Locale.ROOT);
+       switch (name) {
+           case "trans", "transgender","lesbian" -> {
+               if (z <= 15) {
+                   customRenderFishingLine(fishingBobberEntity, v, w, x, vertexConsumer2, entry2, percentage(z, 15), percentage(z + 1, 15));
+               }
+           }
+           case "gay", "proud" -> {
+               if (z <= 12) {
+                   customRenderFishingLine(fishingBobberEntity, v, w, x, vertexConsumer2, entry2, percentage(z, 12), percentage(z + 1, 12));
+               }
+           }
+           case "gay mlm", "mlm" -> {
+               if (z <= 14) {
+                   customRenderFishingLine(fishingBobberEntity, v, w, x, vertexConsumer2, entry2, percentage(z, 14), percentage(z + 1, 14));
+               }
+           }
+           default -> customRenderFishingLine(fishingBobberEntity, v, w, x, vertexConsumer2, entry2, percentage(z, 16), percentage(z + 1, 16));
+       }
+   }
+
+    /*@Inject(method = "render(Lnet/minecraft/entity/projectile/FishingBobberEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;pop()V",ordinal = 1),locals = LocalCapture.PRINT)
+    private void mixin2(FishingBobberEntity fishingBobberEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci, PlayerEntity playerEntity, MatrixStack.Entry entry, Matrix4f matrix4f, Matrix3f matrix3f, VertexConsumer vertexConsumer, int j, ItemStack itemStack, float h, float k, float l, double d, double e, double m, double n, double o, double p, double q, float r, double s, double t, double u, float v, float w, float x, VertexConsumer vertexConsumer2, MatrixStack.Entry entry2, int y){
+        switch (((ColorAccessor) fishingBobberEntity).getRGB().toLowerCase(Locale.ROOT)) {
+            case "trans":
+                for(int z = 0; z <= 15; ++z) {
+                    customRenderFishingLine(fishingBobberEntity, v, w, x, vertexConsumer2, entry2, percentage(z, 15), percentage(z + 1, 15));
+                }
+            default:
+                for(int z = 0; z <= 16; ++z) {
+                    customRenderFishingLine(fishingBobberEntity, v, w, x, vertexConsumer2, entry2, percentage(z, 16), percentage(z + 1, 16));
+                }
+        }
+    }*/
 
     @Redirect(method = "render(Lnet/minecraft/entity/projectile/FishingBobberEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/FishingBobberEntityRenderer;renderFishingLine(FFFLnet/minecraft/client/render/VertexConsumer;Lnet/minecraft/client/util/math/MatrixStack$Entry;FF)V"))
     private void mixin(float x, float y, float z, VertexConsumer entry2, MatrixStack.Entry matrices, float segmentStart, float segmentEnd) {
@@ -43,6 +75,10 @@ public abstract class FishingBobberEntityRendererMixin implements ColorAccessor 
     }
 
     private static void customRenderFishingLine(FishingBobberEntity fishingBobberEntity,float x, float y, float z, VertexConsumer buffer, MatrixStack.Entry matrices, float segmentStart, float segmentEnd) {
+
+        //System.out.println("SS"+segmentStart);
+        //System.out.println("SE"+segmentStart);
+
         float f = x * segmentStart;
         float gg = y * (segmentStart * segmentStart + segmentStart) * 0.5F + 0.25F;
         float h = z * segmentStart;
@@ -67,19 +103,83 @@ public abstract class FishingBobberEntityRendererMixin implements ColorAccessor 
         float g2;
         float b2;
 
-            switch (((ColorAccessor) fishingBobberEntity).getRGB().toLowerCase(Locale.ROOT)){
-                case "flux":
-                    r2 = (float)(Math.sin( ((fishingBobberEntity.age) % 240f) * Math.PI / 60f ) + 1 ) / 2;
-                    g2 = (float)(Math.sin( ((fishingBobberEntity.age + 80) % 240f) * Math.PI / 60f ) + 1 ) / 2;
-                    b2 = (float)(Math.sin( ((fishingBobberEntity.age + 160) % 240f) * Math.PI / 60f ) + 1 ) / 2;
-
-                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(r2, g2 ,b2, 1.0f).normal(matrices.getNormalMatrix(), i, j, k).next();
-                    break;
-                case "trans":
-                    break;
-                default:
-                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(r, g, b, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+        switch (((ColorAccessor) fishingBobberEntity).getRGB().toLowerCase(Locale.ROOT)) {
+            case "flux" -> {
+                r2 = (float) (Math.sin((((segmentStart*16)*2+ fishingBobberEntity.age) % 240f) * Math.PI / 60f) + 1) / 2;
+                g2 = (float) (Math.sin(((segmentStart*16)*2+(fishingBobberEntity.age + 80) % 240f) * Math.PI / 60f) + 1) / 2;
+                b2 = (float) (Math.sin(((segmentStart*16)*2+(fishingBobberEntity.age + 160) % 240f) * Math.PI / 60f) + 1) / 2;
+                buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(r2, g2, b2, 1.0f).normal(matrices.getNormalMatrix(), i, j, k).next();
             }
+            case "bi","bisexual" -> {
+                if (segmentStart <= 1f && segmentStart > 10f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(214, 2, 112, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 10f / 16f && segmentStart > 6f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(155, 79, 150, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 6f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 56, 168, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+            case "trans","transgender" -> {
+                if (segmentStart <= 1f && segmentStart > 12f / 15f || segmentStart <= 3f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(91, 206, 250, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 12f / 15f && segmentStart > 9f / 15f || (segmentStart <= 6f / 15f && segmentStart > 3f / 15f))
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(245, 169, 184, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 9f / 15f && segmentStart > 6f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
+            case "gay","proud" -> {
+                if (segmentStart <= 1f && segmentStart > 10f / 12f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 0, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 10f / 12f && segmentStart > 8f / 12f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 140, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 8f / 12f && segmentStart > 6f / 12f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 6f / 12f && segmentStart > 4f / 12f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 255, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 4f / 12f && segmentStart > 2f / 12f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 0, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 2f / 12f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 0, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
+            case "gay mlm","mlm" -> {
+                if (segmentStart <= 1f && segmentStart > 12f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(7, 141, 112, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 12f / 14f && segmentStart > 10f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(39, 201, 171, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 10f / 14f && segmentStart > 8f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(154, 233, 195, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 8f / 14f && segmentStart > 6f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 6f / 14f && segmentStart > 4f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(124, 174, 228, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 4f / 14f && segmentStart > 2f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(81, 74, 204, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 2f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(62, 26, 120, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
+            case "lesbian" -> {
+                if (segmentStart <= 1f && segmentStart > 12f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(213, 45, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 12f / 15f && segmentStart > 9f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 154, 86, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 9f / 15f && segmentStart > 6f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 6f / 15f && segmentStart > 3f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(211, 98, 164, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 3f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(163, 2, 98, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+            case "ukraine" -> {
+                if (segmentStart <= 1f && segmentStart > 8f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 91, 187, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 8f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 213, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
+            default -> buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(r, g, b, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+        }
 
 
     }
