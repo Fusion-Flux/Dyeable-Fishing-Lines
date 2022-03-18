@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(FishingBobberEntity.class)
 public abstract class FishingRodEntityMixin extends Entity implements ColorAccessor {
 
-    private static final TrackedData<Boolean> DORGB = DataTracker.registerData(FishingBobberEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<String> RODNAME = DataTracker.registerData(FishingBobberEntity.class, TrackedDataHandlerRegistry.STRING);
     private static final TrackedData<Integer> COLOR = DataTracker.registerData(FishingBobberEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     public FishingRodEntityMixin(EntityType<?> type, World world) {
@@ -26,7 +26,7 @@ public abstract class FishingRodEntityMixin extends Entity implements ColorAcces
 
     @Inject(method = "initDataTracker",at = @At("HEAD"))
     public void initDataTracker(CallbackInfo ci) {
-        this.getDataTracker().startTracking(DORGB, false);
+        this.getDataTracker().startTracking(RODNAME, "");
         this.getDataTracker().startTracking(COLOR, 0);
     }
 
@@ -50,11 +50,11 @@ public abstract class FishingRodEntityMixin extends Entity implements ColorAcces
     }
 
     @Override
-    public boolean getRGB() {
-        return getDataTracker().get(DORGB);
+    public String getRGB() {
+        return getDataTracker().get(RODNAME);
     }
     @Override
-    public void setRGB(boolean color) {
-        this.getDataTracker().set(DORGB, color);
+    public void setRGB(String name) {
+        this.getDataTracker().set(RODNAME, name);
     }
 }

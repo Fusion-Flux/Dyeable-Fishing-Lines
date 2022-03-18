@@ -35,9 +35,9 @@ public class FishingRodItemMixin implements DyeableItem {
         FishingBobberEntity bobber = new FishingBobberEntity(user, world, j, i);
         ((ColorAccessor)bobber).setColor(this.getColor(itemStack));
         System.out.println(itemStack.getName().asString());
-        if(itemStack.hasCustomName() && Objects.equals(itemStack.getName().asString().toLowerCase(Locale.ROOT), "flux")){
-            ((ColorAccessor)bobber).setRGB(true);
-        }
+       // if(itemStack.hasCustomName() && Objects.equals(itemStack.getName().asString().toLowerCase(Locale.ROOT), "flux")){
+            ((ColorAccessor)bobber).setRGB(itemStack.getName().asString().toLowerCase(Locale.ROOT));
+       // }
         world.spawnEntity(bobber);
     }
 

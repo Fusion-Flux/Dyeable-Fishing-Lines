@@ -6,8 +6,8 @@ public interface ColorAccessor {
 
     void setColor(Integer color);
 
-    boolean getRGB();
+    String getRGB();
 
-    void setRGB(boolean state);
+    void setRGB(String state);
 
 }

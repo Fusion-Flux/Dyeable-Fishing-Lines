@@ -21,6 +21,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.Locale;
+
 @Mixin(FishingBobberEntityRenderer.class)
 public abstract class FishingBobberEntityRendererMixin implements ColorAccessor {
 
@@ -64,23 +66,22 @@ public abstract class FishingBobberEntityRendererMixin implements ColorAccessor 
         float r2;
         float g2;
         float b2;
-        if (((ColorAccessor)fishingBobberEntity).getRGB()) {
 
-            float t = ((float)(fishingBobberEntity.age % 30f))/30f;
+            switch (((ColorAccessor) fishingBobberEntity).getRGB().toLowerCase(Locale.ROOT)){
+                case "flux":
+                    r2 = (float)(Math.sin( ((fishingBobberEntity.age) % 240f) * Math.PI / 60f ) + 1 ) / 2;
+                    g2 = (float)(Math.sin( ((fishingBobberEntity.age + 80) % 240f) * Math.PI / 60f ) + 1 ) / 2;
+                    b2 = (float)(Math.sin( ((fishingBobberEntity.age + 160) % 240f) * Math.PI / 60f ) + 1 ) / 2;
 
-           /* r2 =  ((fishingBobberEntity.age) % 120f) /120f;;
-            g2 =  ((fishingBobberEntity.age+40) % 120f) /120f;;
-            b2 =  ((fishingBobberEntity.age+80) % 120f) /120f;;*/
-            r2 = (float)(Math.sin( ((fishingBobberEntity.age +  0) % 240f) * Math.PI / 60f ) + 1 ) / 2;
-            g2 = (float)(Math.sin( ((fishingBobberEntity.age + 80) % 240f) * Math.PI / 60f ) + 1 ) / 2;
-            b2 = (float)(Math.sin( ((fishingBobberEntity.age + 160) % 240f) * Math.PI / 60f ) + 1 ) / 2;
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(r2, g2 ,b2, 1.0f).normal(matrices.getNormalMatrix(), i, j, k).next();
+                    break;
+                case "trans":
+                    break;
+                default:
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(r, g, b, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
 
-            buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(r2, g2 ,b2, 1.0f).normal(matrices.getNormalMatrix(), i, j, k).next();
 
-        }else{
-            buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(r, g, b, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
-
-        }
     }
 
     }
