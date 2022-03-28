@@ -36,7 +36,7 @@ public abstract class FishingBobberEntityRendererMixin implements ColorAccessor 
     private void mixin(FishingBobberEntity fishingBobberEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci, PlayerEntity playerEntity, MatrixStack.Entry entry, Matrix4f matrix4f, Matrix3f matrix3f, VertexConsumer vertexConsumer, int j, ItemStack itemStack, float h, float k, float l, double d, double e, double m, double n, double o, double p, double q, float r, double s, double t, double u, float v, float w, float x, VertexConsumer vertexConsumer2, MatrixStack.Entry entry2, int y, int z) {
        String name = ((ColorAccessor) fishingBobberEntity).getRGB().toLowerCase(Locale.ROOT);
        switch (name) {
-           case "trans", "transgender","lesbian" -> {
+           case "trans", "transgender","lesbian","genderfluid","pan","pansexual","poly","polysexual", "aro","aromantic","aroace" -> {
                if (z <= 15) {
                    customRenderFishingLine(fishingBobberEntity, v, w, x, vertexConsumer2, entry2, percentage(z, 15), percentage(z + 1, 15));
                }
@@ -46,7 +46,7 @@ public abstract class FishingBobberEntityRendererMixin implements ColorAccessor 
                    customRenderFishingLine(fishingBobberEntity, v, w, x, vertexConsumer2, entry2, percentage(z, 12), percentage(z + 1, 12));
                }
            }
-           case "gay mlm", "mlm" -> {
+           case "gay mlm", "mlm","agender","demiboy","demigirl","bigender" -> {
                if (z <= 14) {
                    customRenderFishingLine(fishingBobberEntity, v, w, x, vertexConsumer2, entry2, percentage(z, 14), percentage(z + 1, 14));
                }
@@ -54,20 +54,6 @@ public abstract class FishingBobberEntityRendererMixin implements ColorAccessor 
            default -> customRenderFishingLine(fishingBobberEntity, v, w, x, vertexConsumer2, entry2, percentage(z, 16), percentage(z + 1, 16));
        }
    }
-
-    /*@Inject(method = "render(Lnet/minecraft/entity/projectile/FishingBobberEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;pop()V",ordinal = 1),locals = LocalCapture.PRINT)
-    private void mixin2(FishingBobberEntity fishingBobberEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci, PlayerEntity playerEntity, MatrixStack.Entry entry, Matrix4f matrix4f, Matrix3f matrix3f, VertexConsumer vertexConsumer, int j, ItemStack itemStack, float h, float k, float l, double d, double e, double m, double n, double o, double p, double q, float r, double s, double t, double u, float v, float w, float x, VertexConsumer vertexConsumer2, MatrixStack.Entry entry2, int y){
-        switch (((ColorAccessor) fishingBobberEntity).getRGB().toLowerCase(Locale.ROOT)) {
-            case "trans":
-                for(int z = 0; z <= 15; ++z) {
-                    customRenderFishingLine(fishingBobberEntity, v, w, x, vertexConsumer2, entry2, percentage(z, 15), percentage(z + 1, 15));
-                }
-            default:
-                for(int z = 0; z <= 16; ++z) {
-                    customRenderFishingLine(fishingBobberEntity, v, w, x, vertexConsumer2, entry2, percentage(z, 16), percentage(z + 1, 16));
-                }
-        }
-    }*/
 
     @Redirect(method = "render(Lnet/minecraft/entity/projectile/FishingBobberEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/FishingBobberEntityRenderer;renderFishingLine(FFFLnet/minecraft/client/render/VertexConsumer;Lnet/minecraft/client/util/math/MatrixStack$Entry;FF)V"))
     private void mixin(float x, float y, float z, VertexConsumer entry2, MatrixStack.Entry matrices, float segmentStart, float segmentEnd) {
@@ -118,10 +104,37 @@ public abstract class FishingBobberEntityRendererMixin implements ColorAccessor 
                 if (segmentStart <= 6f / 16f)
                     buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 56, 168, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
             }
+
+            case "intersex" -> {
+                if (segmentStart <= 1f && segmentStart > 12f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 216, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 12f / 16f && segmentStart > 10f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(121, 2, 170, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 10f / 16f && segmentStart > 6f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 216, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 6f / 16f && segmentStart > 4f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(121, 2, 170, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 4f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 216, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
+            case "demisexual" -> {
+                if (segmentStart <= 1f && segmentStart > 11f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 11f / 16f && segmentStart > 9f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(109, 0, 112, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 9f / 16f && segmentStart > 7f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 0, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 7f / 16f && segmentStart > 5f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(109, 0, 112, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 5f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(210, 210, 210, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
             case "trans","transgender" -> {
                 if (segmentStart <= 1f && segmentStart > 12f / 15f || segmentStart <= 3f / 16f)
                     buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(91, 206, 250, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
-                if (segmentStart <= 12f / 15f && segmentStart > 9f / 15f || (segmentStart <= 6f / 15f && segmentStart > 3f / 15f))
+                if ((segmentStart <= 12f / 15f && segmentStart > 9f / 15f) || (segmentStart <= 6f / 15f && segmentStart > 3f / 15f))
                     buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(245, 169, 184, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
                 if (segmentStart <= 9f / 15f && segmentStart > 6f / 15f)
                     buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
@@ -159,6 +172,23 @@ public abstract class FishingBobberEntityRendererMixin implements ColorAccessor 
                     buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(62, 26, 120, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
             }
 
+            case "agender" -> {
+                if (segmentStart <= 1f && segmentStart > 12f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 0, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 12f / 14f && segmentStart > 10f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(188, 196, 198, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 10f / 14f && segmentStart > 8f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 8f / 14f && segmentStart > 6f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(182, 245, 131, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 6f / 14f && segmentStart > 4f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 4f / 14f && segmentStart > 2f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(188, 196, 198, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 2f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 0, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
             case "lesbian" -> {
                 if (segmentStart <= 1f && segmentStart > 12f / 15f)
                     buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(213, 45, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
@@ -171,11 +201,187 @@ public abstract class FishingBobberEntityRendererMixin implements ColorAccessor 
                 if (segmentStart <= 3f / 15f)
                     buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(163, 2, 98, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
             }
+
+            case "ace","asexual" -> {
+                if (segmentStart <= 1f && segmentStart > 12f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 0, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 12f / 16f && segmentStart > 8f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(163, 163, 163, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 8f / 16f && segmentStart > 4f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 4f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(128, 0, 128, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
+            case "plural" -> {
+                if (segmentStart <= 1f && segmentStart > 12f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(48, 198, 159, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 12f / 16f && segmentStart > 8f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(52, 125, 223, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 8f / 16f && segmentStart > 4f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(107, 63, 190, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 4f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 0, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
+            case "nonbinary" -> {
+                if (segmentStart <= 1f && segmentStart > 12f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 244, 48, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 12f / 16f && segmentStart > 8f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 8f / 16f && segmentStart > 4f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(156, 89, 209, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 4f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 0, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
             case "ukraine" -> {
                 if (segmentStart <= 1f && segmentStart > 8f / 16f)
                     buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 91, 187, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
                 if (segmentStart <= 8f / 16f)
                     buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 213, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
+            case "genderfluid" -> {
+                if (segmentStart <= 1f && segmentStart > 12f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 117, 162, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 12f / 15f && segmentStart > 9f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 9f / 15f && segmentStart > 6f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(190, 24, 214, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 6f / 15f && segmentStart > 3f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 0, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 3f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(51, 62, 189, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
+            case "aroace" -> {
+                if (segmentStart <= 1f && segmentStart > 12f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(226, 140, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 12f / 15f && segmentStart > 9f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(236, 205, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 9f / 15f && segmentStart > 6f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 6f / 15f && segmentStart > 3f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(98, 174, 220, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 3f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(32, 56, 86, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
+            case "aro","aromantic" -> {
+                if (segmentStart <= 1f && segmentStart > 12f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(61, 165, 66, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 12f / 15f && segmentStart > 9f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(167, 211, 121, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 9f / 15f && segmentStart > 6f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 6f / 15f && segmentStart > 3f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(169, 169, 169, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 3f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 0, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
+            case "pan","pansexual" -> {
+                if (segmentStart <= 1f && segmentStart > 10f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(254, 33, 139, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 10f / 15f && segmentStart > 5f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(254, 215, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 5f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(33, 176, 254, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+            case "poly","polysexual" -> {
+                if (segmentStart <= 1f && segmentStart > 10f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(246, 28, 158, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 10f / 15f && segmentStart > 5f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(7, 213, 105, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 5f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(28, 146, 246, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+            case "genderqueer" -> {
+                if (segmentStart <= 1f && segmentStart > 10f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(181, 126, 220, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 10f / 15f && segmentStart > 5f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 5f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(74, 129, 35, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
+            case "disability" -> {
+                if (segmentStart <= 1f && segmentStart > 10f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(234, 191, 63, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 10f / 15f && segmentStart > 5f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(207, 209, 208, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 5f / 15f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(211, 152, 74, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
+            case "demiboy" -> {
+                if ((segmentStart <= 1f && segmentStart > 12f / 14f) || segmentStart <= 2f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(127, 127, 127, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if ((segmentStart <= 12f / 14f && segmentStart > 10f / 14f) || (segmentStart <= 4f / 14f && segmentStart > 2f / 14f))
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(196, 196, 196, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if ((segmentStart <= 10f / 14f && segmentStart > 8f / 14f) || (segmentStart <= 6f / 14f && segmentStart > 4f / 14f))
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(154, 217, 235, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 8f / 14f && segmentStart > 6f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+            case "demigirl" -> {
+                if ((segmentStart <= 1f && segmentStart > 12f / 14f) || segmentStart <= 2f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(127, 127, 127, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if ((segmentStart <= 12f / 14f && segmentStart > 10f / 14f) || (segmentStart <= 4f / 14f && segmentStart > 2f / 14f))
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(196, 196, 196, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if ((segmentStart <= 10f / 14f && segmentStart > 8f / 14f) || (segmentStart <= 6f / 14f && segmentStart > 4f / 14f))
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 174, 201, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 8f / 14f && segmentStart > 6f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
+            case "bigender" -> {
+                if (segmentStart <= 1f && segmentStart > 12f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(196, 121, 160, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 12f / 14f && segmentStart > 10f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(236, 166, 203, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 10f / 14f && segmentStart > 8f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(214, 199, 233, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 8f / 14f && segmentStart > 6f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 255, 255, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 6f / 14f && segmentStart > 4f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(214, 199, 233, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 4f / 14f && segmentStart > 2f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(155, 199, 232, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 2f / 14f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(107, 131, 207, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
+
+            case "amongus","sussy","sus" -> {
+                if (segmentStart <= 1f && segmentStart > 14f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(199, 16, 18, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 14f / 16f && segmentStart > 13f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(19, 40, 57, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 13f / 16f && segmentStart > 10f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(149, 202, 220, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 10f / 16f && segmentStart > 8f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(79, 125, 161, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 8f / 16f && segmentStart > 7f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(19, 40, 57, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 7f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(199, 16, 18, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+            }
+
+            case "pineapple" -> {
+                if (segmentStart <= 1f && segmentStart > 14f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 85, 16, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 14f / 16f && segmentStart > 11f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 113, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 11f / 16f && segmentStart > 10f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 0, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 10f / 16f && segmentStart > 4f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 113, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 4f / 16f && segmentStart > 3f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(0, 0, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
+                if (segmentStart <= 3f / 16f)
+                    buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(255, 113, 0, 255).normal(matrices.getNormalMatrix(), i, j, k).next();
             }
 
             default -> buffer.vertex(matrices.getPositionMatrix(), f, gg, h).color(r, g, b, 255).normal(matrices.getNormalMatrix(), i, j, k).next();

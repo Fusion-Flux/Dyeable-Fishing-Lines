@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "dyeable_fishing_lines",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Dyeable Fishing Lines",
+  "description": "What the name says",
   "authors": [
-    "Me!"
+    "Fusion Flux (Super Cool And Awesome)"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
@@ -22,7 +22,7 @@
       "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
     ],
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "net.fabricmc.example.DyeableFishingLines"
     ]
   },
   "mixins": [
